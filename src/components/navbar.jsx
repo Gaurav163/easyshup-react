@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 class Navbar extends Component {
   render() {
+    const { user } = this.props;
+    console.log(user);
     return (
       <div>
         <nav className="navbar navbar-expand-md navbar-dark bg-teal">
@@ -17,54 +19,70 @@ class Navbar extends Component {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <Link className="navbar-brand nav-link mr-auto" to="/">
+          <NavLink className="navbar-brand nav-link mr-auto" to="/">
             EasyShup
-          </Link>
+          </NavLink>
 
-          <form className="form-inline m-auto">
-            <div className="input-group">
-              <input
-                type="searh"
-                className="form-control"
-                placeholder="search"
-                aria-label="Search"
-                aria-describedby="button-addon2"
-              ></input>
-              <div className="input-group-append">
-                <button
-                  className="btn btn-info"
-                  type="button"
-                  id="button-addon2"
-                >
-                  <i className="fa fa-search"></i>
-                </button>
-              </div>
+          <div className="input-group mr-auto">
+            <input
+              type="searh"
+              className="form-control"
+              placeholder="search"
+              aria-label="Search"
+              aria-describedby="button-addon2"
+            ></input>
+            <div className="input-group-append">
+              <button className="btn btn-info" type="button" id="button-addon2">
+                <i className="fa fa-search"></i>
+              </button>
             </div>
-          </form>
+          </div>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav m-auto">
-              <li className="nav-item mr-2">
-                <NavLink className="nav-link" to="/register">
-                  Regsiter
+            <div className="navbar-nav m-auto">
+              {!user && (
+                <NavLink className="nav-link ml-2" to="/login">
+                  Sign_in
                 </NavLink>
-              </li>
-              <li className="nav-item mr-2">
-                <NavLink className="nav-link" to="/login">
-                  Login
-                </NavLink>
-              </li>
-              <li className="nav-item mr-2">
-                <NavLink className="nav-link" to="/cart">
-                  Cart
-                </NavLink>
-              </li>
-              <li className="nav-item mr-2">
-                <NavLink className="nav-link" to="/verify">
-                  Verify
-                </NavLink>
-              </li>
-            </ul>
+              )}
+
+              {user && (
+                <div class="nav-item dropdown ml-4">
+                  <NavLink
+                    className="nav-link dropdown-toggle"
+                    to="#"
+                    id="navbarDropdown"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    {user.name}
+                  </NavLink>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <NavLink className="dropdown-item" to="/cart">
+                      cart
+                    </NavLink>
+                    <NavLink className="dropdown-item" to="#">
+                      Another action
+                    </NavLink>
+                    <div class="dropdown-divider"></div>
+                    <NavLink className="dropdown-item" to="#">
+                      Something else here
+                    </NavLink>
+                  </div>
+                </div>
+              )}
+
+              <NavLink className="nav-link ml-2" to="/cart">
+                Cart
+              </NavLink>
+              <NavLink className="nav-link ml-2" to="/verify">
+                Orders
+              </NavLink>
+            </div>
           </div>
         </nav>
       </div>
