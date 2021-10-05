@@ -56,27 +56,22 @@ class Regsiter extends Form {
         this.props.history.replace("/login");
       }
     } catch (ex) {
+      toast.dismiss(id);
       console.log(ex);
       if (ex.response && ex.response.status === 400) {
-        toast.update(id, {
-          render: ex.response.data.message,
-          type: "error",
-          isLoading: false,
-          autoClose: 4000,
-        });
         const { errors, valids } = this.state;
         errors.email = ex.response.data.message;
         valids.email = "is-invalid";
 
         this.setState({ errors });
-      } else {
-        toast.dismiss(id);
       }
     }
   };
+
   tologin = () => {
     this.props.history.push("/login");
   };
+
   render() {
     const { data, errors, valids } = this.state;
 
@@ -106,7 +101,7 @@ class Regsiter extends Form {
         <br />
         <br />
         <div>
-          Already have an account?{" "}
+          Already have an account?
           <div className="btn btn-info" onClick={this.tologin}>
             Go to Login
           </div>

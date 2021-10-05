@@ -1,93 +1,96 @@
-import React, { Component } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
-class Navbar extends Component {
-  render() {
-    const { user } = this.props;
-    console.log(user);
-    return (
-      <div>
-        <nav className="navbar navbar-expand-md navbar-dark bg-teal">
-          <button
-            className="navbar-toggler mb-2"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <NavLink className="navbar-brand nav-link mr-auto" to="/">
-            EasyShup
-          </NavLink>
+const Navbar = ({ user }) => {
+  return (
+    <div>
+      <nav className="navbar navbar-expand-md navbar-dark bg-teal">
+        <button
+          className="navbar-toggler mb-2"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <NavLink className="navbar-brand mr-auto ml-2" to="/">
+          EasyShup
+        </NavLink>
 
-          <div className="input-group mr-auto">
-            <input
-              type="searh"
-              className="form-control"
-              placeholder="search"
-              aria-label="Search"
-              aria-describedby="button-addon2"
-            ></input>
-            <div className="input-group-append">
-              <button className="btn btn-info" type="button" id="button-addon2">
-                <i className="fa fa-search"></i>
-              </button>
-            </div>
+        <div className="input-group mr-auto ml-2" style={{ width: "800px" }}>
+          <div className="input-group-prepend">
+            <button className="btn btn-info" type="button" id="button-addon2">
+              <i className="fa fa-search"></i>
+            </button>
           </div>
+          <input
+            type="searh"
+            className="form-control"
+            placeholder="search"
+            aria-label="Search"
+            aria-describedby="button-addon2"
+          ></input>
+        </div>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <div className="navbar-nav m-auto">
+            {!user && (
+              <NavLink className="nav-link ml-2" to="/login">
+                Sign_in
+              </NavLink>
+            )}
 
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <div className="navbar-nav m-auto">
-              {!user && (
-                <NavLink className="nav-link ml-2" to="/login">
-                  Sign_in
+            {user && (
+              <div className="nav-item dropdown ml-2">
+                <NavLink
+                  className="nav-link dropdown-toggle"
+                  to="/profile"
+                  id="navbarDropdown"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="true"
+                >
+                  {user.name}
                 </NavLink>
-              )}
-
-              {user && (
-                <div class="nav-item dropdown ml-4">
-                  <NavLink
-                    className="nav-link dropdown-toggle"
-                    to="#"
-                    id="navbarDropdown"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    {user.name}
+                <div
+                  className="dropdown-menu bg-teal p-3 m-2"
+                  aria-labelledby="navbarDropdown"
+                >
+                  <NavLink className="nav-link pl-2" to="/profile">
+                    Account
                   </NavLink>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <NavLink className="dropdown-item" to="/cart">
-                      cart
-                    </NavLink>
-                    <NavLink className="dropdown-item" to="#">
-                      Another action
-                    </NavLink>
-                    <div class="dropdown-divider"></div>
-                    <NavLink className="dropdown-item" to="#">
-                      Something else here
-                    </NavLink>
-                  </div>
+                  <NavLink className="nav-link pl-2" to="/cart">
+                    cart
+                  </NavLink>
+                  <NavLink className="nav-link pl-2" to="/addproduct">
+                    Sell Product
+                  </NavLink>
+                  <NavLink className="nav-link pl-2" to="#">
+                    Sell Items
+                  </NavLink>
+                  <NavLink className="nav-link pl-2" to="/logout">
+                    Logout
+                  </NavLink>
                 </div>
-              )}
+              </div>
+            )}
 
-              <NavLink className="nav-link ml-2" to="/cart">
-                Cart
-              </NavLink>
-              <NavLink className="nav-link ml-2" to="/verify">
-                Orders
-              </NavLink>
-            </div>
+            <NavLink className="nav-link ml-2" to="/cart">
+              Cart
+            </NavLink>
+            <NavLink className="nav-link ml-2" to="/feedback">
+              Feedback
+            </NavLink>
+            <NavLink className="nav-link ml-2" to="/help">
+              Help
+            </NavLink>
           </div>
-        </nav>
-      </div>
-    );
-  }
-}
+        </div>
+      </nav>
+    </div>
+  );
+};
 
 export default Navbar;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import jwtDecode from "jwt-decode";
 import Cart from "./components/cart";
 import Home from "./components/home";
 import Login from "./components/login";
@@ -9,18 +8,18 @@ import Navbar from "./components/navbar";
 import Regsiter from "./components/register";
 import Verify from "./components/verify";
 import AddProduct from "./components/addproduct";
+import Logout from './components/logout';
 import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
+import Profile from './components/profile';
+import auth from "./services/authService";
 
 class App extends Component {
   state = {};
 
   componentDidMount() {
-    try {
-      const jwt = localStorage.getItem('token');
-      const user = jwtDecode(jwt);
-      this.setState({ user });
-    } catch (ex) { }
+    const user = auth.getUser();
+    this.setState({ user });
   }
 
   render() {
@@ -32,6 +31,10 @@ class App extends Component {
         <Switch>
           <Route path="/register" component={Regsiter} />
           <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/profile" render={props => <Profile {...props} user={this.state.user} />} />
+
+
           <Route path="/cart" component={Cart} />
           <Route path="/verify" component={Verify} />
           <Route path="/addproduct" component={AddProduct} />
