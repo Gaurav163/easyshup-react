@@ -5,7 +5,7 @@ class Profile extends Component {
     return (
       <div className="jumbotron container">
         <h1>Hello, {this.props.user && this.props.user.name}</h1>
-        <p class="lead">Thanks for using</p>
+        <p className="lead">Thanks for using</p>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
-import { apiUrl } from "../config.json"
 
+const apiUrl = process.env.REACT_APP_url;
 const url = apiUrl + "/user";
 const tokenKey = "token";
 http.setUser(localStorage.getItem(tokenKey));

@@ -1,6 +1,6 @@
 import http from "./httpService";
-import { apiUrl } from "../config.json"
 
+const apiUrl = process.env.REACT_APP_url;
 const url = apiUrl + "/user";
 
 export async function register(user) {

@@ -1,6 +1,9 @@
 import React from "react";
 import Form from "./common/form";
 import Joi from "joi-browser";
+import http from "../services/httpService";
+import { toast } from "react-toastify";
+const apiEndpoint = process.env.REACT_APP_url;
 
 class AddProduct extends Form {
   state = {
@@ -11,7 +14,7 @@ class AddProduct extends Form {
       price: "",
       count: "",
       size: "",
-      description: "",
+      image: "",
     },
     errors: {},
     valids: {},
@@ -26,13 +29,25 @@ class AddProduct extends Form {
     size: Joi.string().required().label("Size"),
 
     count: Joi.number().required().min(5).label("Count"),
-    description: Joi.string().required().label("Description"),
+    image: Joi.string().required().label("Image Link"),
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
+    console.log("submit");
     e.preventDefault();
     const error = this.validate();
-    if (error) return;
+    console.log(error);
+
+    try {
+      console.log("submit");
+      const response = await http.post(
+        apiEndpoint + "/seller/addproduct",
+        this.state.data
+      );
+      if (response && response.status === 200) {
+        toast.success(`Now we are selling you Product ${this.state.data.name}`);
+      }
+    } catch (error) {}
   };
 
   render() {
@@ -48,7 +63,7 @@ class AddProduct extends Form {
           {this.renderInput("mrp", "MRP")}
           {this.renderInput("size", "Size")}
           {this.renderInput("count", "Count")}
-          {this.renderInput("description", "Description")}
+          {this.renderInput("image", "Image Link")}
           {this.renderButton("Sell Product")}
         </form>
       </div>

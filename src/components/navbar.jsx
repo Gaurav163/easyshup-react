@@ -64,12 +64,10 @@ const Navbar = ({ user }) => {
                   <NavLink className="nav-link pl-2" to="/cart">
                     cart
                   </NavLink>
-                  <NavLink className="nav-link pl-2" to="/addproduct">
-                    Sell Product
+                  <NavLink className="nav-link pl-2" to="/seller">
+                    My Seller Profile
                   </NavLink>
-                  <NavLink className="nav-link pl-2" to="#">
-                    Sell Items
-                  </NavLink>
+
                   <NavLink className="nav-link pl-2" to="/logout">
                     Logout
                   </NavLink>

@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
 import Profile from './components/profile';
 import auth from "./services/authService";
+import Seller from './components/seller';
+import BecomeSeller from './components/becomeSeller';
 
 class App extends Component {
   state = {};
@@ -33,10 +35,15 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
           <Route path="/profile" render={props => <Profile {...props} user={this.state.user} />} />
+          <Route path="/seller/setup" component={BecomeSeller} />
+
+          <Route path="/seller" render={props => <Seller {...props} user={this.state.user} />} />
+
+
 
 
           <Route path="/cart" component={Cart} />
-          <Route path="/verify" component={Verify} />
+          <Route path="/verify/:token" component={Verify} />
           <Route path="/addproduct" component={AddProduct} />
 
           <Route path="/" component={Home} />
