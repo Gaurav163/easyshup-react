@@ -44,10 +44,14 @@ class AddProduct extends Form {
         apiEndpoint + "/seller/addproduct",
         this.state.data
       );
-      if (response && response.status === 200) {
-        toast.success(`Now we are selling you Product ${this.state.data.name}`);
-      }
+      toast.success(`Now we are selling you Product ${this.state.data.name}`);
+      this.props.history.replace("/seller");
     } catch (error) {}
+  };
+
+  cancel = () => {
+    console.log("Cancel");
+    this.props.history.goBack();
   };
 
   render() {
@@ -66,6 +70,14 @@ class AddProduct extends Form {
           {this.renderInput("image", "Image Link")}
           {this.renderButton("Sell Product")}
         </form>
+        <br />
+        <br />
+        <div>
+          Don't Want to Add New Product?
+          <div className="btn btn-secondary" onClick={this.cancel}>
+            Cancel
+          </div>
+        </div>
       </div>
     );
   }
