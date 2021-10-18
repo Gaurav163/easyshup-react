@@ -16,11 +16,12 @@ class Regsiter extends Form {
     name: Joi.string().required().label("Name"),
     email: Joi.string().email().required().label("Email"),
     password: Joi.string().min(8).required().label("Password"),
-    phone: Joi.string()
-      .length(10)
-      .pattern(/^[0-9]+$/)
+    phone: Joi.number()
+      .integer()
+      .min(1000000000)
+      .max(9999999999)
       .required()
-      .label("Password"),
+      .label("Phone"),
 
     repassword: Joi.string().min(8).required().label("Password"),
   };
