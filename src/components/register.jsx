@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 class Regsiter extends Form {
   state = {
-    data: { name: "", email: "", password: "", repassword: "" },
+    data: { name: "", email: "", phone: "", password: "", repassword: "" },
     errors: {},
     valids: {},
   };
@@ -16,6 +16,12 @@ class Regsiter extends Form {
     name: Joi.string().required().label("Name"),
     email: Joi.string().email().required().label("Email"),
     password: Joi.string().min(8).required().label("Password"),
+    phone: Joi.string()
+      .length(10)
+      .pattern(/^[0-9]+$/)
+      .required()
+      .label("Password"),
+
     repassword: Joi.string().min(8).required().label("Password"),
   };
 
@@ -84,6 +90,8 @@ class Regsiter extends Form {
           {this.renderInput("name", "Name")}
 
           {this.renderInput("email", "Email")}
+          {this.renderInput("phone", "Phone")}
+
           {this.renderInput("password", "Password", "password")}
           <Input
             type="password"
