@@ -8,7 +8,7 @@ class Login extends Form {
   state = { data: { email: "", password: "" }, errors: {}, valids: {} };
 
   schema = {
-    email: Joi.string().email().required().label("Email"),
+    email: Joi.string().required().label("Email Or Phone"),
     password: Joi.string().required().min(8).label("Password"),
   };
 
@@ -48,7 +48,7 @@ class Login extends Form {
           Sign In
         </h1>
         <form>
-          {this.renderInput("email", "Email")}
+          {this.renderInput("email", "Email or Phone")}
           {this.renderInput("password", "Password", "password")}
           {this.renderButton("Sign In")}
         </form>

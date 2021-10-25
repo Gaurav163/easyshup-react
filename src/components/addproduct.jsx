@@ -15,6 +15,8 @@ class AddProduct extends Form {
       count: "",
       size: "",
       image: "",
+      tags: "",
+      description: "",
     },
     errors: {},
     valids: {},
@@ -27,7 +29,8 @@ class AddProduct extends Form {
     price: Joi.number().required().min(20).label("Price"),
     mrp: Joi.number().required().min(20).label("MRP"),
     size: Joi.string().required().label("Size"),
-
+    tags: Joi.string().required().label("Size"),
+    description: Joi.string().required().label("Size"),
     count: Joi.number().required().min(5).label("Count"),
     image: Joi.string().required().label("Image Link"),
   };
@@ -44,8 +47,8 @@ class AddProduct extends Form {
         apiEndpoint + "/seller/addproduct",
         this.state.data
       );
-      toast.success(`Now we are selling you Product ${this.state.data.name}`);
-      this.props.history.replace("/seller");
+      toast.success(`Product ${this.state.data.name} Added`);
+      // this.props.history.replace("/seller");
     } catch (error) {}
   };
 
@@ -68,6 +71,8 @@ class AddProduct extends Form {
           {this.renderInput("size", "Size")}
           {this.renderInput("count", "Count")}
           {this.renderInput("image", "Image Link")}
+          {this.renderInput("tags", "Tags")}
+          {this.renderInput("description", "Description")}
           {this.renderButton("Sell Product")}
         </form>
         <br />

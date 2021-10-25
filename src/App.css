@@ -24,3 +24,40 @@ a.nav-link:hover {
   cursor: pointer;
   box-shadow: rgb(0, 255, 255) 4px 4px 8px;
 }
+
+.pview {
+  height: 450px;
+  width: 18%;
+  border: solid grey 2px;
+  border-radius: 10px;
+  padding: 1%;
+  margin-left: 2%;
+  margin-top: 15px;
+}
+
+@media (max-width: 1500px) {
+  .pview {
+    width: 23%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .pview {
+    width: 30%;
+    margin-left: 3%;
+  }
+}
+
+@media (max-width: 900px) {
+  .pview {
+    width: 46%;
+    margin-left: 4%;
+  }
+}
+
+@media (max-width: 500px) {
+  .pview {
+    width: 93%;
+    margin-left: 4%;
+  }
+}

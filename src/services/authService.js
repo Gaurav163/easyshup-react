@@ -25,6 +25,12 @@ async function login(user) {
 
 }
 
+async function setToken(token) {
+    localStorage.setItem(tokenKey, token);
+
+}
+
+
 function logout() {
     localStorage.removeItem(tokenKey);
 
@@ -34,5 +40,5 @@ function logout() {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    getUser, login, logout
+    getUser, login, logout, setToken
 }

@@ -6,7 +6,6 @@ import Home from "./components/home";
 import Login from "./components/login";
 import Navbar from "./components/navbar";
 import Regsiter from "./components/register";
-import Verify from "./components/verify";
 import AddProduct from "./components/addproduct";
 import Logout from './components/logout';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,6 +14,7 @@ import Profile from './components/profile';
 import auth from "./services/authService";
 import Seller from './components/seller';
 import BecomeSeller from './components/becomeSeller';
+import Pdetail from './components/productdet';
 
 class App extends Component {
   state = {};
@@ -34,7 +34,10 @@ class App extends Component {
           <Route path="/register" component={Regsiter} />
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
+
           <Route path="/profile" render={props => <Profile {...props} user={this.state.user} />} />
+          <Route path="/product/:id" render={props => <Pdetail {...props} user={this.state.user} />} />
+
           <Route path="/seller/setup" component={BecomeSeller} />
 
           <Route path="/seller" render={props => <Seller {...props} user={this.state.user} />} />
@@ -43,7 +46,6 @@ class App extends Component {
 
 
           <Route path="/cart" component={Cart} />
-          <Route path="/verify/:token" component={Verify} />
           <Route path="/addproduct" component={AddProduct} />
 
           <Route path="/" component={Home} />

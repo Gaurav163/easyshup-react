@@ -2,28 +2,36 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import Input from "./common/input";
-import { register } from "../services/userService";
+import auth from "../services/authService";
+import { register, generateOtp } from "../services/userService";
 import { toast } from "react-toastify";
 
 class Regsiter extends Form {
   state = {
-    data: { name: "", email: "", phone: "", password: "", repassword: "" },
+    data: { name: "", userid: "", password: "", repassword: "", otp: "123456" },
     errors: {},
     valids: {},
+    type: "Email",
+    gOtp: false,
   };
 
   schema = {
     name: Joi.string().required().label("Name"),
-    email: Joi.string().email().required().label("Email"),
+    userid: Joi.string().email().required().label("Email"),
     password: Joi.string().min(8).required().label("Password"),
+
+    repassword: Joi.string().min(8).required().label("Password"),
+    otp: Joi.number().integer().min(100000).max(999999).required().label("OTP"),
+  };
+
+  newsc = {
     phone: Joi.number()
       .integer()
       .min(1000000000)
       .max(9999999999)
       .required()
       .label("Phone"),
-
-    repassword: Joi.string().min(8).required().label("Password"),
+    email: Joi.string().email().required().label("Email"),
   };
 
   handleRepassword = (e) => {
@@ -50,6 +58,7 @@ class Regsiter extends Form {
     if (this.handleRepassword()) return;
 
     const user = { ...this.state.data };
+    user.type = this.state.type === "Email" ? "email" : "phone";
     const id = toast.loading("Registering ...");
     try {
       const response = await register(user);
@@ -60,12 +69,15 @@ class Regsiter extends Form {
           isLoading: false,
           autoClose: 3000,
         });
-        this.props.history.replace("/login");
+        auth.setToken(response.data.token);
+
+        this.props.history.replace("/");
       }
     } catch (ex) {
       toast.dismiss(id);
       console.log(ex);
       if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data.message);
         const { errors, valids } = this.state;
         errors.email = ex.response.data.message;
         valids.email = "is-invalid";
@@ -79,19 +91,63 @@ class Regsiter extends Form {
     this.props.history.push("/login");
   };
 
+  handleUserid = () => {
+    if (this.state.type === "Email") {
+      this.setState({ type: "Phone" });
+      this.schema.userid = this.newsc.phone;
+    } else {
+      this.setState({ type: "Email" });
+      this.schema.userid = this.newsc.phone;
+    }
+  };
+
+  generateOtp = async () => {
+    let type = "email";
+    if (this.state.type === "Phone") type = "phone";
+    try {
+      const response = await generateOtp(type, this.state.data.userid);
+      if (response.status === 200) {
+        this.setState({ gOtp: true });
+      }
+    } catch (ex) {
+      if (ex.response) {
+        console.log(ex.response.data.message);
+        const { errors, valids } = this.state;
+        errors.userid = ex.response.data.message;
+        valids.userid = "is-invalid";
+
+        this.setState({ errors });
+      }
+    }
+  };
+
   render() {
-    const { data, errors, valids } = this.state;
+    const { data, errors, valids, type } = this.state;
 
     return (
       <div className="container mt-5" style={{ maxWidth: "500px" }}>
         <h1 className="text-center" style={{ color: "teal" }}>
           Register
         </h1>
+        <br />
+
+        <div className="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="flexCheckDefault"
+            onChange={this.handleUserid}
+            disabled={this.state.gOtp}
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Register With Mobile Number.
+          </label>
+        </div>
+        <br />
         <form>
           {this.renderInput("name", "Name")}
 
-          {this.renderInput("email", "Email")}
-          {this.renderInput("phone", "Phone")}
+          {this.renderInput("userid", type)}
 
           {this.renderInput("password", "Password", "password")}
           <Input
@@ -104,6 +160,17 @@ class Regsiter extends Form {
             error={errors.repassword}
             validm="Password Matched"
           />
+          <div
+            className="btn btn-info"
+            onClick={this.generateOtp}
+            style={{ backgroundColor: "teal" }}
+            diabled={this.state.gOtp}
+          >
+            Generate Otp
+          </div>
+          <br />
+          <br />
+          {this.state.gOtp && this.renderInput("otp", "OTP")}
 
           {this.renderButton("Regsiter")}
         </form>
