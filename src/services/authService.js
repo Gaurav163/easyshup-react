@@ -17,7 +17,7 @@ function getUser() {
 async function login(user) {
 
     const { data: jwt } = await http.post(url + "/login", {
-        email: user.email,
+        userid: user.userid,
         password: user.password
     });
     console.log("jwt", jwt);

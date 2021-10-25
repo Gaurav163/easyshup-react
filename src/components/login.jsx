@@ -5,10 +5,10 @@ import auth from "../services/authService";
 import { toast } from "react-toastify";
 
 class Login extends Form {
-  state = { data: { email: "", password: "" }, errors: {}, valids: {} };
+  state = { data: { userid: "", password: "" }, errors: {}, valids: {} };
 
   schema = {
-    email: Joi.string().required().label("Email Or Phone"),
+    userid: Joi.string().required().label("Email Or Phone"),
     password: Joi.string().required().min(8).label("Password"),
   };
 
@@ -25,8 +25,8 @@ class Login extends Form {
       if (ex.response && ex.response.status < 500) {
         const { errors, valids } = this.state;
         if (ex.response.status === 400) {
-          errors.email = ex.response.data.message;
-          valids.email = "is-invalid";
+          errors.userid = ex.response.data.message;
+          valids.userid = "is-invalid";
         } else if (ex.response.status === 401) {
           errors.password = ex.response.data.message;
           valids.password = "is-invalid";
@@ -48,7 +48,7 @@ class Login extends Form {
           Sign In
         </h1>
         <form>
-          {this.renderInput("email", "Email or Phone")}
+          {this.renderInput("userid", "Email or Phone")}
           {this.renderInput("password", "Password", "password")}
           {this.renderButton("Sign In")}
         </form>
