@@ -48,7 +48,7 @@ class AddProduct extends Form {
         this.state.data
       );
       toast.success(`Product ${this.state.data.name} Added`);
-      // this.props.history.replace("/seller");
+      this.props.history.replace("/seller");
     } catch (error) {}
   };
 

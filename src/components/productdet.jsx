@@ -40,7 +40,7 @@ class Pdetail extends React.Component {
               {" "}
               <b>{`Rs: ${product.price} `} </b>
             </span>
-            <span className="badge badge-success p-1"> Special Offer</span>
+            <span className="badge badge-success p-1"> Offer Price!</span>
             <br />
             <span>
               <small>
