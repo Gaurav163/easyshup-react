@@ -4,35 +4,22 @@ import { toast } from "react-toastify";
 
 const apiUrl = process.env.REACT_APP_url;
 
-class Cart extends Component {
+class Orders extends Component {
   state = { products: [], done: false };
 
   async componentDidMount() {
     try {
-      const response = await http.get(apiUrl + "/buy/mycart");
-      const products = response.data.cart;
+      const response = await http.get(apiUrl + "/buy/myorder");
+      const products = response.data.orders;
       this.setState({ products, done: true });
       console.log(products);
     } catch (error) {
       console.log(error);
     }
   }
-  buyProduct = (id) => {
-    this.props.history.push("/buy/" + id);
-  };
+
   viewProduct = (id) => {
     this.props.history.push("/product/" + id);
-  };
-  removeCart = async (id) => {
-    try {
-      const response = await http.get(apiUrl + "/buy/removecart/" + id);
-      if (response.status === 200) {
-        console.log(response.data.message);
-        toast.success(response.data.message);
-        const products = this.state.products.filter((p) => p._id !== id);
-        this.setState({ products });
-      }
-    } catch (error) {}
   };
 
   render() {
@@ -42,13 +29,13 @@ class Cart extends Component {
       <div className="container">
         <center>
           {" "}
-          <h1>My Cart</h1>
+          <h1>My Orders</h1>
         </center>
-        {products.length === 0 && done && <h3>There is no item in cart.</h3>}
+        {products.length === 0 && done && <h3>There is no Orders to show.</h3>}
 
-        {products.map((product) => (
+        {products.map(({ product, address, pincode, status, _id }) => (
           <div
-            key={product._id}
+            key={_id}
             className="rounded row float-left"
             style={{
               width: "100%",
@@ -67,7 +54,9 @@ class Cart extends Component {
               onClick={() => this.viewProduct(product._id)}
             />
             <div className="rounded col p-2">
-              <h3>{product.name}</h3>
+              <h3>Order Details</h3>
+              <b>{product.name}</b>
+              <br />
               <span>
                 <strong>Brand :</strong>
                 {product.brand}
@@ -78,28 +67,17 @@ class Cart extends Component {
                 {product.size}
               </span>
               <br />
-              <span>
-                <b>{`Rs: ${product.price} `}</b>
-              </span>
-              <span>
-                <small>
-                  <del>{`MRP: ${product.mrp} `}</del>
-                </small>
-              </span>
-              <br />
-              <div style={{ fontSize: "larger" }}>★★★★☆</div>
-              <br />
-              <div
-                className="btn btn-warning mr-2"
-                onClick={() => this.buyProduct(product._id)}
-              >
-                Buy Now
+              <div>
+                <b>Bill Amount (in Rs):</b> {product.price}
               </div>
-              <div
-                className="btn btn-danger mr-2"
-                onClick={() => this.removeCart(product._id)}
-              >
-                Remove
+              <div>
+                <b>Address : </b> {address}
+              </div>
+              <div>
+                <b>Pincode : </b> {pincode}
+              </div>
+              <div>
+                <b>Status : </b> {status}
               </div>
             </div>
           </div>
@@ -109,4 +87,4 @@ class Cart extends Component {
   }
 }
 
-export default Cart;
+export default Orders;

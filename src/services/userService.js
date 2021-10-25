@@ -21,7 +21,7 @@ export async function login(user) {
 }
 
 export async function generateOtp(type, userid) {
-    return await http.post(url + "/gernerateotp", {
+    return http.post(url + "/gernerateotp", {
         type,
         userid
     });

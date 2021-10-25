@@ -64,6 +64,9 @@ const Navbar = ({ user }) => {
                   <NavLink className="nav-link pl-2" to="/cart">
                     cart
                   </NavLink>
+                  <NavLink className="nav-link pl-2" to="/orders">
+                    My Orders
+                  </NavLink>
                   <NavLink className="nav-link pl-2" to="/seller">
                     My Seller Profile
                   </NavLink>

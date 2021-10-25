@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 class Regsiter extends Form {
   state = {
-    data: { name: "", userid: "", password: "", repassword: "", otp: "123456" },
+    data: { name: "", userid: "", password: "", repassword: "", otp: "" },
     errors: {},
     valids: {},
     type: "Email",
@@ -77,7 +77,7 @@ class Regsiter extends Form {
       toast.dismiss(id);
       console.log(ex);
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data.message);
+        toast.error(ex.response.data.message);
         const { errors, valids } = this.state;
         errors.email = ex.response.data.message;
         valids.email = "is-invalid";
@@ -95,9 +95,13 @@ class Regsiter extends Form {
     if (this.state.type === "Email") {
       this.setState({ type: "Phone" });
       this.schema.userid = this.newsc.phone;
+      this.state.data.userid = "";
+      this.setState();
     } else {
       this.setState({ type: "Email" });
       this.schema.userid = this.newsc.phone;
+      this.state.data.userid = "";
+      this.setState();
     }
   };
 
@@ -108,6 +112,7 @@ class Regsiter extends Form {
       const response = await generateOtp(type, this.state.data.userid);
       if (response.status === 200) {
         this.setState({ gOtp: true });
+        toast.succcess(response.data.message);
       }
     } catch (ex) {
       if (ex.response) {
@@ -160,19 +165,20 @@ class Regsiter extends Form {
             error={errors.repassword}
             validm="Password Matched"
           />
-          <div
-            className="btn btn-info"
-            onClick={this.generateOtp}
-            style={{ backgroundColor: "teal" }}
-            diabled={this.state.gOtp}
-          >
-            Generate Otp
-          </div>
-          <br />
-          <br />
+          {!this.state.gOtp && (
+            <div
+              className="btn btn-info"
+              onClick={this.generateOtp}
+              style={{ backgroundColor: "teal" }}
+              diabled={this.state.gOtp}
+            >
+              Generate Otp
+            </div>
+          )}
+
           {this.state.gOtp && this.renderInput("otp", "OTP")}
 
-          {this.renderButton("Regsiter")}
+          {this.state.gOtp && this.renderButton("Regsiter")}
         </form>
         <br />
         <br />

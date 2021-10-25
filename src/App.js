@@ -15,6 +15,8 @@ import auth from "./services/authService";
 import Seller from './components/seller';
 import BecomeSeller from './components/becomeSeller';
 import Pdetail from './components/productdet';
+import Buy from './components/buy';
+import Orders from './components/order';
 
 class App extends Component {
   state = {};
@@ -46,6 +48,10 @@ class App extends Component {
 
 
           <Route path="/cart" component={Cart} />
+          <Route path="/orders" component={Orders} />
+
+          <Route path="/buy/:id" component={Buy} />
+
           <Route path="/addproduct" component={AddProduct} />
 
           <Route path="/" component={Home} />
