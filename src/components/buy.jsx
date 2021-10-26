@@ -26,7 +26,7 @@ class Buy extends Form {
       .min(100000)
       .max(999999)
       .required()
-      .label("Phone"),
+      .label("Pincode"),
     address: Joi.string().required().min(12).label("Address"),
   };
 
