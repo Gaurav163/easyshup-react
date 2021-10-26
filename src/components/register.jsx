@@ -71,7 +71,7 @@ class Regsiter extends Form {
         });
         auth.setToken(response.data.token);
 
-        this.props.history.replace("/");
+        window.location.replace("/");
       }
     } catch (ex) {
       toast.dismiss(id);

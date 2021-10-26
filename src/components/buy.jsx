@@ -67,7 +67,7 @@ class Buy extends Form {
             src={product.image}
             alt=""
             width="50%"
-            style={{ maxHeight: "80vh" }}
+            style={{ maxHeight: "100vh" }}
             className="rounded"
           />
           <div className="rounded col p-4">

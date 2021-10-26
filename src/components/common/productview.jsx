@@ -26,7 +26,7 @@ class Pview extends React.Component {
           className="rounded"
         />
         <div className="rounded col p-2">
-          <h3>{product.name}</h3>
+          <h4>{product.name}</h4>
           <span>
             <strong>Brand :</strong>
             {product.brand}
